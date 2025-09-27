@@ -1,4 +1,5 @@
 Sopan 1.0 - by Team Terrace Techies
+
 Welcome to the official repository for Sopan 1.0, our project for the Smart India Hackathon 2025. This repository contains the frontend code for our smart irrigation dashboard, designed to be intuitive and accessible for the farmers of Sikkim.
 
 Frontend Code Usability
