@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Terrace_Techies/static/css/main.d947fa45.css",
+    "main.js": "/Terrace_Techies/static/js/main.bf21a4b6.js",
+    "static/js/453.c3c3cfff.chunk.js": "/Terrace_Techies/static/js/453.c3c3cfff.chunk.js",
+    "index.html": "/Terrace_Techies/index.html",
+    "main.d947fa45.css.map": "/Terrace_Techies/static/css/main.d947fa45.css.map",
+    "main.bf21a4b6.js.map": "/Terrace_Techies/static/js/main.bf21a4b6.js.map",
+    "453.c3c3cfff.chunk.js.map": "/Terrace_Techies/static/js/453.c3c3cfff.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d947fa45.css",
+    "static/js/main.bf21a4b6.js"
+  ]
+}
