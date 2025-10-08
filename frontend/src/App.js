@@ -1,30 +1,45 @@
 import React, { useState, useEffect } from 'react';
+import { Line } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import './App.css';
 
-// --- Icons (New weather icons added) ---
+// Register Chart.js components
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+
+// --- Icons ---
 const WaterDropIcon = () => <svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.32 0L12 2.69z"/></svg>;
-const SunIcon = () => <svg viewBox="0 0 24 24"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0-5a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1zm0 18a1 1 0 0 1-1-1v-2a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1zm-7.78-3.22a1 1 0 0 1 0-1.42l1.42-1.42a1 1 0 1 1 1.42 1.42l-1.42 1.42a1 1 0 0 1-1.42 0zm12.74 0a1 1 0 0 1-1.42 0l-1.42-1.42a1 1 0 1 1 1.42-1.42l1.42 1.42a1 1 0 0 1 0 1.42zM4.22 6.36a1 1 0 0 1 0 1.42L2.8 9.2a1 1 0 1 1-1.42-1.42L2.8 6.36a1 1 0 0 1 1.42 0zm12.74 0a1 1 0 0 1 1.42 0l1.42 1.42a1 1 0 1 1-1.42 1.42L18.36 7.78a1 1 0 0 1 0-1.42zM22 12a1 1 0 0 1-1-1h-2a1 1 0 1 1 0-2h2a1 1 0 0 1 1 1zm-20 0a1 1 0 0 1-1-1H1a1 1 0 1 1 0-2h2a1 1 0 0 1 1 1z"/></svg>;
-const CloudIcon = () => <svg viewBox="0 0 24 24"><path d="M19.35 10.04A8.5 8.5 0 0 0 12 4a8.5 8.5 0 0 0-8.24 6.03A6 6 0 0 0 6 20h12a5 5 0 0 0 .35-9.96z"/></svg>;
+const ThermometerIcon = () => <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/><path d="M12 4a4 4 0 0 0-4 4v7.5a4 4 0 1 0 8 0V8a4 4 0 0 0-4-4z"/></svg>;
 const ValveIcon = () => <svg viewBox="0 0 24 24"><path d="M22 12h-4.28c-.42-1.8-1.55-3.3-3.07-4.37l2.55-2.55a1 1 0 0 0-1.42-1.42l-2.55 2.55C11.3 5.33 9.8 4.2 8 3.72V2a1 1 0 0 0-2 0v1.72C4.2 4.2 2.7 5.33 1.63 6.93l-2.55-2.55a1 1 0 0 0-1.42 1.42l2.55 2.55C-0.37 10.7 0.76 12.2 2.58 12.62H2a1 1 0 0 0 0 2h.58c.42 1.8 1.55 3.3 3.07 4.37l-2.55 2.55a1 1 0 1 0 1.42 1.42l2.55-2.55c1.95 1.18 4.3 1.18 6.26 0l2.55 2.55a1 1 0 0 0 1.42-1.42l-2.55-2.55c1.52-1.07 2.65-2.57 3.07-4.37H22a1 1 0 0 0 0-2zm-10 4a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/></svg>;
 const SettingsIcon = () => <svg viewBox="0 0 24 24"><path d="M19.4 12.6a1 1 0 0 0-1.4 0l-.8.8-1.5-1.5.8-.8a1 1 0 0 0 0-1.4l-2-2a1 1 0 0 0-1.4 0l-.8.8-1.5-1.5.8-.8a1 1 0 0 0 0-1.4l-2-2a1 1 0 0 0-1.4 0l-.8.8-1.5-1.5.8-.8a1 1 0 0 0 0-1.4A1 1 0 0 0 4.6 2.4l-2 2a1 1 0 0 0 0 1.4l.8.8 1.5 1.5-.8.8a1 1 0 0 0 0 1.4l2 2a1 1 0 0 0 1.4 0l.8-.8 1.5 1.5-.8.8a1 1 0 0 0 0 1.4l2 2a1 1 0 0 0 1.4 0l.8-.8 1.5 1.5-.8.8a1 1 0 0 0 0 1.4l2 2a1 1 0 0 0 1.4 0l.8-.8 1.5 1.5-.8.8a1 1 0 0 0 0 1.4l2 2a1 1 0 0 0 1.4 0l2-2a1 1 0 0 0 0-1.4l-.8-.8-1.5-1.5.8-.8a1 1 0 0 0 0-1.4l-2-2a1 1 0 0 0-1.4 0l-.8.8 1.5-1.5.8-.8z"/></svg>;
+const ChartIcon = () => <svg viewBox="0 0 24 24"><path d="M16 6a1 1 0 0 1 1 1v10a1 1 0 1 1-2 0V7a1 1 0 0 1 1-1zm-4 4a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1zm-4-2a1 1 0 0 1 1 1v8a1 1 0 1 1-2 0V9a1 1 0 0 1 1-1zM4 20a1 1 0 0 1-1-1V5a1 1 0 0 1 2 0v14a1 1 0 0 1-1 1zm16 0H4a1 1 0 1 1 0-2h16a1 1 0 1 1 0 2z"/></svg>;
 
 
-// --- Translations (Updated for Weather) ---
+// --- Translations ---
 const translations = {
-  en: { title: "Sopan 1.0", auto: "Automatic", manual: "Manual", soilMoisture: "Soil Moisture", weather: "Weather", waterValve: "Water Valve", settings: "Settings", save: "Save", lowThreshold: "Turn ON below", highThreshold: "Turn OFF above", on: "ON", off: "OFF", dry: "Dry", optimal: "Optimal", wet: "Wet", sunny: "Sunny", cloudy: "Cloudy" },
-  hi: { title: "सोपान 1.0", auto: "स्वचालित", manual: "मैनुअल", soilMoisture: "मिट्टी में नमी", weather: "मौसम", waterValve: "पानी का वाल्व", settings: "सेटिंग्स", save: "सहेजें", lowThreshold: "इससे नीचे चालू करें", highThreshold: "इससे ऊपर बंद करें", on: "चालू", off: "बंद", dry: "सूखा", optimal: "इष्टतम", wet: "गीला", sunny: "धूप", cloudy: "बादल छाए" },
-  ne: { title: "सोपान 1.0", auto: "स्वचालित", manual: "म्यानुअल", soilMoisture: "माटोको चिस्यान", weather: "मौसम", waterValve: "पानी भल्भ", settings: "सेटिङहरू", save: "सेभ गर्नुहोस्", lowThreshold: "तल खोल्नुहोस्", highThreshold: "माथि बन्द गर्नुहोस्", on: "अन", off: "अफ", dry: "सुख्खा", optimal: "उत्तम", wet: "भिजेको", sunny: "घाम", cloudy: "बादल" }
+  en: { title: "Sopan 1.0", auto: "Automatic", manual: "Manual", soilMoisture: "Soil Moisture", temperature: "Temperature", waterValve: "Water Valve", settings: "Settings", save: "Save", lowThreshold: "Turn ON below", highThreshold: "Turn OFF above", on: "ON", off: "OFF", dry: "Dry", optimal: "Optimal", wet: "Wet", viewHistory: "View History" },
+  hi: { title: "सोपान 1.0", auto: "स्वचालित", manual: "मैनुअल", soilMoisture: "मिट्टी में नमी", temperature: "तापमान", waterValve: "पानी का वाल्व", settings: "सेटिंग्स", save: "सहेजें", lowThreshold: "इससे नीचे चालू करें", highThreshold: "इससे ऊपर बंद करें", on: "चालू", off: "बंद", dry: "सूखा", optimal: "इष्टतम", wet: "गीला", viewHistory: "इतिहास देखें" },
+  ne: { title: "सोपान 1.0", auto: "स्वचालित", manual: "म्यानुअल", soilMoisture: "माटोको चिस्यान", temperature: "तापमान", waterValve: "पानी भल्भ", settings: "सेटिङहरू", save: "सेभ गर्नुहोस्", lowThreshold: "तल खोल्नुहोस्", highThreshold: "माथि बन्द गर्नुहोस्", on: "अन", off: "अफ", dry: "सुख्खा", optimal: "उत्तम", wet: "भिजेको", viewHistory: "इतिहास हेर्नुहोस्" }
 };
+
+// Static history data for the chart
+const staticHistory = [
+    { time: '10:00 AM', value: 45 }, { time: '10:05 AM', value: 47 },
+    { time: '10:10 AM', value: 46 }, { time: '10:15 AM', value: 48 },
+    { time: '10:20 AM', value: 52 }, { time: '10:25 AM', value: 51 },
+    { time: '10:30 AM', value: 50 }, { time: '10:35 AM', value: 49 },
+];
 
 function App() {
   const [lang, setLang] = useState('en');
   const [mode, setMode] = useState('auto');
   const [valveOn, setValveOn] = useState(false);
   
-  // Static values for demonstration. Set to "Optimal" so valve starts OFF.
-  const [soilMoisture] = useState(45);
-  const [weather] = useState('sunny'); // 'sunny' or 'cloudy'
+  const [soilMoisture] = useState(45); 
+  const [temperature] = useState(26);
 
+  // New state to control chart visibility
+  const [showChart, setShowChart] = useState(false);
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [settings, setSettings] = useState({ low: 30, high: 60 });
 
@@ -35,7 +50,7 @@ function App() {
     if (mode === 'auto') {
       if (soilMoisture < settings.low) setValveOn(true);
       else if (soilMoisture > settings.high) setValveOn(false);
-      else setValveOn(false); // If optimal, ensure valve is off
+      else setValveOn(false);
     }
   }, [soilMoisture, mode, settings]);
 
@@ -45,13 +60,25 @@ function App() {
     return { key: 'optimal', text: t.optimal };
   };
 
-  const getWeatherStatus = () => {
-    if (weather === 'sunny') return { key: 'sunny', text: t.sunny, icon: <SunIcon /> };
-    return { key: 'cloudy', text: t.cloudy, icon: <CloudIcon /> };
-  };
-
   const soilStatus = getSoilStatus(soilMoisture);
-  const weatherStatus = getWeatherStatus();
+
+  const chartData = {
+    labels: staticHistory.map(p => p.time),
+    datasets: [{
+      label: t.soilMoisture,
+      data: staticHistory.map(p => p.value),
+      borderColor: 'var(--primary-color)',
+      backgroundColor: 'rgba(42, 157, 143, 0.1)',
+      fill: true,
+      tension: 0.3
+    }]
+  };
+  
+  const chartOptions = {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: { y: { min: 30, max: 60 } }
+  };
 
   const handleSettingsSave = (newSettings) => {
     setSettings(newSettings);
@@ -80,8 +107,8 @@ function App() {
         </div>
         
         <div className="card-grid">
-            <VisualCard icon={<WaterDropIcon />} title={t.soilMoisture} status={soilStatus.key} statusText={soilStatus.text} />
-            <VisualCard icon={weatherStatus.icon} title={t.weather} status={weatherStatus.key} statusText={weatherStatus.text} />
+            <InfoCard icon={<WaterDropIcon />} title={t.soilMoisture} status={soilStatus.key} statusText={soilStatus.text} value={soilMoisture} unit="%" />
+            <InfoCard icon={<ThermometerIcon />} title={t.temperature} status="optimal" statusText="" value={temperature} unit="°C" />
             <VisualCard icon={<ValveIcon />} title={t.waterValve} status={valveOn ? 'on' : 'off'} statusText={valveOn ? t.on : t.off}>
               {mode === 'manual' && (
                 <div className="manual-controls">
@@ -91,18 +118,49 @@ function App() {
               )}
             </VisualCard>
         </div>
+
+        {/* --- Conditionally Rendered Chart --- */}
+        {showChart && (
+          <div className="chart-container">
+            <h3>{t.soilMoisture} (History)</h3>
+            <Line options={chartOptions} data={chartData} />
+          </div>
+        )}
       </main>
       
-      <button className="settings-btn" onClick={() => setIsModalOpen(true)}>
-        <SettingsIcon />
-      </button>
+      <div className="action-buttons">
+          <button className="action-btn" onClick={() => setShowChart(!showChart)}>
+            <ChartIcon />
+            <span>{t.viewHistory}</span>
+          </button>
+          <button className="action-btn" onClick={() => setIsModalOpen(true)}>
+            <SettingsIcon />
+            <span>{t.settings}</span>
+          </button>
+      </div>
 
       {isModalOpen && <SettingsModal t={t} currentSettings={settings} onSave={handleSettingsSave} onClose={() => setIsModalOpen(false)} />}
     </div>
   );
 }
 
-// --- NEW Reusable Visual Card Component ---
+// Reusable Card with Numbers
+const InfoCard = ({ icon, title, status, statusText, value, unit }) => {
+  return (
+    <div className={`card info-card status-${status}`}>
+      <div className="card-header">
+        {icon}
+        <h3>{title}</h3>
+      </div>
+      <div className="card-body">
+        <p className="value">{value}<span>{unit}</span></p>
+        <p className="status-text">{statusText}</p>
+      </div>
+    </div>
+  );
+};
+
+// Reusable Card for Visuals Only
 const VisualCard = ({ icon, title, status, statusText, children }) => {
   return (
     <div className={`card visual-card status-${status}`}>
@@ -118,7 +176,7 @@ const VisualCard = ({ icon, title, status, statusText, children }) => {
   );
 };
 
-// --- Settings Modal (Unchanged) ---
+// Settings Modal
 const SettingsModal = ({ t, currentSettings, onSave, onClose }) => {
   const [low, setLow] = useState(currentSettings.low);
   const [high, setHigh] = useState(currentSettings.high);

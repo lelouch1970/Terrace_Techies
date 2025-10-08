@@ -19,15 +19,13 @@
   box-sizing: border-box;
 }
 
-*, *:before, *:after {
-  box-sizing: inherit;
-}
+*, *:before, *:after { box-sizing: inherit; }
 
 body {
   background-color: var(--bg-color);
   color: var(--text-color-dark);
   margin: 0;
-  padding: 25px; /* Added more overall padding */
+  padding: 25px;
 }
 
 /* --- Main App Container --- */
@@ -37,7 +35,7 @@ body {
   margin: 0 auto;
   background-color: var(--card-bg);
   border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* CORRECTED THIS LINE */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   position: relative;
 }
@@ -45,211 +43,116 @@ body {
 header {
   background-color: var(--primary-color);
   color: var(--text-color-light);
-  padding: 20px; /* Increased padding */
+  padding: 20px;
   text-align: center;
 }
 
 header h1 { margin: 0; font-size: 1.4em; }
-
-.lang-selector {
-  margin-top: 15px; /* Increased margin */
-  display: flex;
-  justify-content: center;
-  gap: 12px; /* Increased gap */
-}
-
+.lang-selector { margin-top: 15px; display: flex; justify-content: center; gap: 12px; }
 .lang-selector button {
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.5);
   color: var(--text-color-light);
-  padding: 5px 15px; /* Increased padding */
+  padding: 5px 15px;
   font-size: 0.9em;
   border-radius: 15px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
-
-.lang-selector button.active {
-  background: var(--text-color-light);
-  color: var(--primary-color);
-  font-weight: bold;
-}
+.lang-selector button.active { background: var(--text-color-light); color: var(--primary-color); font-weight: bold; }
 
 /* --- Dashboard & Controls --- */
-.dashboard { padding: 30px; } /* Increased padding */
+.dashboard { padding: 30px; }
+.main-controls { display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 35px; }
+.mode-label { font-size: 1.1em; font-weight: 500; color: var(--light-grey); transition: color 0.3s ease; }
+.mode-label.active { color: var(--primary-color); font-weight: bold; }
 
-.main-controls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 35px; /* Increased margin */
-}
-
-.mode-label {
-  font-size: 1.1em;
-  font-weight: 500;
-  color: var(--light-grey);
-  transition: color 0.3s ease;
-}
-
-.mode-label.active {
-  color: var(--primary-color);
-  font-weight: bold;
-}
-
-.toggle-switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
-
+.toggle-switch { position: relative; display: inline-block; width: 60px; height: 34px; }
 .toggle-switch input { opacity: 0; width: 0; height: 0; }
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: var(--light-grey);
-  transition: .4s;
-  border-radius: 34px;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px; width: 26px;
-  left: 4px; bottom: 4px;
-  background-color: white;
-  transition: .4s;
-  border-radius: 50%;
-}
-
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--light-grey); transition: .4s; border-radius: 34px; }
+.slider:before { position: absolute; content: ""; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
 input:checked + .slider { background-color: var(--primary-color); }
 input:checked + .slider:before { transform: translateX(26px); }
 
+/* --- Card Grid & All Card Styles --- */
+.card-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+.card { border-radius: 15px; text-align: center; transition: background-color 0.4s ease; }
+.card-header { display: flex; align-items: center; justify-content: center; gap: 8px; }
+.card-header h3 { margin: 0; font-size: 1.1em; font-weight: 500; }
+.card-body .status-text { font-size: 1.1em; font-weight: bold; margin: 5px 0 0 0; }
+.card-footer { margin-top: 20px; }
 
-/* --- Card Grid & Visual Cards --- */
-.card-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px; /* Increased gap */
+/* Styles for Info Cards (with numbers) */
+.info-card { padding: 20px; background-color: var(--card-bg); border: 1px solid #eee; }
+.info-card .card-header { color: var(--text-color-dark); }
+/* --- THIS IS THE NEW RULE TO FIX THE ICON SIZE --- */
+.info-card .card-header svg {
+  width: 24px;
+  height: 24px;
 }
+.info-card .card-body .value { font-size: 2.5em; font-weight: 600; margin: 10px 0 0 0; }
+.info-card .card-body .value span { font-size: 0.5em; margin-left: 5px; font-weight: 400; color: #777; }
 
-.card.visual-card {
-  padding: 20px; /* Increased padding */
-  border-radius: 15px;
-  text-align: center;
-  color: var(--text-color-light);
-  transition: background-color 0.4s ease;
-}
+/* Styles for Visual Cards (no numbers) */
+.visual-card { padding: 20px; color: var(--text-color-light); }
+.visual-card .card-header { opacity: 0.9; }
+.visual-card .card-body .icon-display { margin: 20px 0; }
+.visual-card .card-body .icon-display svg { width: 50px; height: 50px; }
+.visual-card .card-body .status-text { font-size: 1.5em; }
 
-.card-header h3 {
-  margin: 0 0 10px 0; /* Added bottom margin */
-  font-size: 1.1em;
-  font-weight: 500;
-  opacity: 0.9;
-}
+/* --- VISUAL CUES (BACKGROUND & TEXT COLORS) --- */
+.status-optimal .value, .status-optimal .status-text { color: var(--status-green); }
+.status-dry .value, .status-dry .status-text { color: var(--status-red); }
+.status-wet .value, .status-wet .status-text { color: var(--status-blue); }
 
-.card-body .icon-display {
-  margin: 20px 0; /* Increased margin */
-}
-
-.card-body .icon-display svg {
-  width: 50px;
-  height: 50px;
-}
-
-.card-body .status-text {
-  font-size: 1.5em;
-  font-weight: bold;
-  margin: 0;
-}
-
-.card-footer { margin-top: 25px; } /* Increased margin */
-
-
-/* --- VISUAL CUES (BACKGROUND COLORS) --- */
-.card.status-optimal { background-color: var(--status-green); }
-.card.status-dry { background-color: var(--status-red); }
-.card.status-wet { background-color: var(--status-blue); }
-.card.status-on { background-color: var(--status-green); }
-.card.status-off { background-color: var(--status-off); }
-.card.status-sunny { background-color: var(--status-yellow); }
-.card.status-cloudy { background-color: var(--status-grey); }
-
+.visual-card.status-on { background-color: var(--status-blue); }
+.visual-card.status-off { background-color: var(--status-off); }
+.visual-card.status-optimal { background-color: var(--status-green); }
+.visual-card.status-dry { background-color: var(--status-red); }
+.visual-card.status-wet { background-color: var(--status-blue); }
+.visual-card.status-sunny { background-color: var(--status-yellow); }
+.visual-card.status-cloudy { background-color: var(--status-grey); }
 
 /* Manual Controls */
-.manual-controls {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-}
-.manual-controls button {
-  padding: 10px 15px; /* Increased padding */
-  border: 2px solid rgba(255, 255, 255, 0.7);
-  background: transparent;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  color: var(--text-color-light);
-}
-.manual-controls button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  background-color: rgba(0, 0, 0, 0.2);
-  border-color: transparent;
-}
+.manual-controls button { padding: 10px 15px; border: 2px solid rgba(255, 255, 255, 0.7); background: transparent; border-radius: 8px; font-weight: bold; cursor: pointer; color: var(--text-color-light); }
+.manual-controls button:disabled { opacity: 0.5; cursor: not-allowed; background-color: rgba(0, 0, 0, 0.2); border-color: transparent; }
 
+/* --- Chart Container --- */
+.chart-container { margin-top: 30px; }
+.chart-container h3 { text-align: center; color: #777; font-weight: 500; margin-bottom: 15px; }
 
-/* --- Settings Button & Modal (Unchanged) --- */
-.settings-btn {
-  position: absolute;
-  top: 15px; right: 15px;
-  background: none; border: none;
-  color: rgba(255, 255, 255, 0.8);
-  cursor: pointer;
-  padding: 5px;
+/* --- ACTION BUTTONS (Settings, History) --- */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    padding: 20px 30px;
+    background-color: #f8f9fa;
+    border-top: 1px solid #eee;
 }
-.settings-btn svg { width: 24px; height: 24px; }
-.settings-btn:hover { color: white; }
+.action-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--card-bg);
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.action-btn:hover { background-color: #f1f1f1; }
+.action-btn svg { width: 24px; height: 24px; }
 
-.modal-overlay {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-.modal-content {
-  background: white;
-  padding: 25px;
-  border-radius: 15px;
-  width: 90%;
-  max-width: 350px;
-  color: var(--text-color-dark);
-}
+/* --- Settings Modal --- */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; }
+.modal-content { background: white; padding: 25px; border-radius: 15px; width: 90%; max-width: 350px; color: var(--text-color-dark); }
 .modal-content h2 { margin-top: 0; text-align: center; }
 .setting-item { margin-bottom: 20px; }
 .setting-item label { display: block; margin-bottom: 10px; font-weight: 500; }
-.setting-item label span {
-  float: right;
-  font-weight: bold;
-  color: var(--primary-color);
-}
+.setting-item label span { float: right; font-weight: bold; color: var(--primary-color); }
 .setting-item input[type="range"] { width: 100%; }
-.save-btn {
-  width: 100%;
-  padding: 12px;
-  font-size: 1.1em;
-  font-weight: bold;
-  color: white;
-  background-color: var(--primary-color);
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-}
+.save-btn { width: 100%; padding: 12px; font-size: 1.1em; font-weight: bold; color: white; background-color: var(--primary-color); border: none; border-radius: 10px; cursor: pointer; }
