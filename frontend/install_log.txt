@@ -1,0 +1,17 @@
+npm verb cli C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\npm\bin\npm-cli.js
+npm info using npm@10.2.3
+npm info using node@v20.10.0
+npm verb title npm install
+npm verb argv "install" "--loglevel" "verbose"
+npm verb logfile logs-max:10 dir:C:\Users\OMKAAR\AppData\Local\npm-cache\_logs\2025-10-07T19_48_45_682Z-
+npm verb logfile C:\Users\OMKAAR\AppData\Local\npm-cache\_logs\2025-10-07T19_48_45_682Z-debug-0.log
+npm http fetch POST 200 https://registry.npmjs.org/-/npm/v1/security/advisories/bulk 479ms
+
+up to date, audited 160 packages in 1s
+
+50 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+npm verb exit 0
+npm info ok 
